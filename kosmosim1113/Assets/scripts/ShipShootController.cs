@@ -49,7 +49,7 @@ public class ShipShootController : MonoBehaviour
         }
         else
         {
-            return Vector3.zero;
+            return transform.position + transform.forward * 100;
         }
     }
 }

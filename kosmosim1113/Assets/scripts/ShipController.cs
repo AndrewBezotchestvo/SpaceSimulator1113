@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using static UnityEngine.ParticleSystem;
 
 public class ShipController : MonoBehaviour
 {
@@ -17,7 +18,9 @@ public class ShipController : MonoBehaviour
     private float _pitchInput; //вверх вниз
 
     private bool _cursorVisible = false;
-    
+
+    [SerializeField] private ParticleSystem _particleSystem;
+    private ParticleSystem.EmissionModule _emissionModule;
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
@@ -67,6 +70,8 @@ public class ShipController : MonoBehaviour
         {
             _cursorVisible = !_cursorVisible;
         }
+
+        _emissionModule.rateOverTime = Mathf.Lerp(10, 10, _rb.velocity.magnitude);
 
     }
 
