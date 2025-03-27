@@ -27,10 +27,30 @@ public class ShipController : MonoBehaviour
 
     void Update()
     {
-        _verticalInput = Input.GetAxis("Vertical");
-        _horizontalInput = Input.GetAxis("Horizontal");
-        _rollInput = Input.GetAxis("Mouse X");
-        _pitchInput = Input.GetAxis("Mouse Y");
+        if (Input.GetKey(KeyCode.LeftShift)) 
+        {
+            _verticalInput = 1;
+        }
+        else
+        {
+            _verticalInput = 0;
+        }
+        
+        if (Input.GetKey(KeyCode.E))
+        {
+            _horizontalInput = 1;
+        }
+        else if (Input.GetKey(KeyCode.Q))
+        {
+            _horizontalInput = -1;
+        }
+        else 
+        {
+            _horizontalInput = 0; 
+        }
+
+        _rollInput = Input.GetAxis("Horizontal");
+        _pitchInput = Input.GetAxis("Vertical");
 
         if (_cursorVisible)
         {
@@ -52,7 +72,7 @@ public class ShipController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _rb.AddTorque(transform.up * _horizontalInput * _rotationSpeed * 3 * Time.fixedDeltaTime, ForceMode.VelocityChange);
+        _rb.AddTorque(transform.up * _horizontalInput * 0.2f * _rotationSpeed * 3 * Time.fixedDeltaTime, ForceMode.VelocityChange);
         _rb.AddTorque(transform.forward * -_rollInput * _rotationSpeed * Time.fixedDeltaTime, ForceMode.VelocityChange);
         _rb.AddTorque(transform.right * -_pitchInput * _rotationSpeed * Time.fixedDeltaTime, ForceMode.VelocityChange);
 
