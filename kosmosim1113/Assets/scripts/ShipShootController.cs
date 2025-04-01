@@ -2,19 +2,30 @@ using UnityEngine;
 
 public class ShipShootController : MonoBehaviour
 {
-    private LineRenderer _lineRenderer;
+    private LineRenderer _lineRenderer1;
+    private LineRenderer _lineRenderer2;
+
     private Ray _ray;
     private RaycastHit _raycastHit;
 
-    private GameObject _shootPoint;
+    private GameObject _shootPoint1;
+    private GameObject _shootPoint2;
 
     void Start()
     {
-        _shootPoint = transform.GetChild(0).gameObject;
-        _lineRenderer = GetComponentInParent<LineRenderer>();
-        _lineRenderer.positionCount = 2;
-        _lineRenderer.startWidth = 0.1f;
-        _lineRenderer.endWidth = 0.1f;
+        _shootPoint1 = transform.GetChild(0).gameObject;
+        _shootPoint2 = transform.GetChild(1).gameObject;
+
+        _lineRenderer1 = _shootPoint1.GetComponent<LineRenderer>();
+        _lineRenderer2 = _shootPoint2.GetComponent<LineRenderer>();
+
+        _lineRenderer1.positionCount = 2;
+        _lineRenderer1.startWidth = 0.1f;
+        _lineRenderer1.endWidth = 0.1f;
+
+        _lineRenderer2.positionCount = 2;
+        _lineRenderer2.startWidth = 0.1f;
+        _lineRenderer2.endWidth = 0.1f;
     }
 
     // Update is called once per frame
@@ -22,25 +33,29 @@ public class ShipShootController : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
-            
+
             Vector3 targetPosition = LaserShoot();
             if (targetPosition != Vector3.zero)
             {
-                _lineRenderer.enabled = true;
-                _lineRenderer.SetPosition(0, _shootPoint.transform.position);
-                _lineRenderer.SetPosition(1, targetPosition);
-                _lineRenderer.material.color = Random.ColorHSV();
+                _lineRenderer1.enabled = true;
+                _lineRenderer1.SetPosition(0, _shootPoint1.transform.position);
+                _lineRenderer1.SetPosition(1, targetPosition);
+
+                _lineRenderer2.enabled = true;
+                _lineRenderer2.SetPosition(0, _shootPoint2.transform.position);
+                _lineRenderer2.SetPosition(1, targetPosition);
             }
         }
         else
         {
-            _lineRenderer.enabled = false;
+            _lineRenderer1.enabled = false;
+            _lineRenderer2.enabled = false;
         }
     }
 
     private Vector3 LaserShoot()
     {
-        _ray = new Ray(_shootPoint.transform.position, _shootPoint.transform.forward);
+        _ray = new Ray(_shootPoint1.transform.position, _shootPoint1.transform.forward);
         Debug.DrawRay(_ray.origin, _ray.direction * 1000);
 
         if (Physics.Raycast(_ray, out _raycastHit))
