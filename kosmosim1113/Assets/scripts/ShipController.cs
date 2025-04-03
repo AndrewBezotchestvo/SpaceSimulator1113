@@ -10,7 +10,7 @@ public class ShipController : MonoBehaviour
     [SerializeField] private float _rotationSpeed = 10f;
     [SerializeField] private float _maxSpeed = 100f;
 
-    private Rigidbody _rb;
+    [SerializeField] private Rigidbody _rb;
 
     private float _verticalInput; //вперед назад
     private float _horizontalInput; //вправо влево рыскание
@@ -23,7 +23,7 @@ public class ShipController : MonoBehaviour
     private ParticleSystem.EmissionModule _emissionModule;
     void Start()
     {
-        _rb = GetComponent<Rigidbody>();
+        
         Cursor.visible = _cursorVisible;
         Cursor.lockState = CursorLockMode.Locked;
     }
